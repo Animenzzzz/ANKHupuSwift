@@ -8,6 +8,8 @@
 
 import UIKit
 
+let controllersTitle = ["推荐","NBA","绝对求生","英雄联盟"]
+
 class ViewController: PageController {
 
     override func viewDidLoad() {
@@ -31,15 +33,8 @@ class ViewController: PageController {
 extension ViewController {
 
     func createViewControllers() -> [UIViewController] {
-        let names = [
-            "favorites",
-            "recents",
-            "contacts",
-            "history",
-            "more",
-        ]
         
-        return names.map { name -> UIViewController in
+        return controllersTitle.map { name -> UIViewController in
             let viewController = ContentViewController()
             viewController.title = name
             return viewController
