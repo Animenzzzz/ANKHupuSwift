@@ -1,0 +1,7 @@
+use_frameworks!
+
+target 'ANKHupuSwift' do
+   pod 'Alamofire'
+   pod 'SwiftyJSON'
+   pod 'SnapKit'
+end

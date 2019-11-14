@@ -10,8 +10,10 @@ import UIKit
 
 let controllersTitle = ["推荐","NBA","绝对求生","英雄联盟"]
 
-class ViewController: PageController {
+class MainViewController: PageController {
 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,6 +22,8 @@ class ViewController: PageController {
         menuBar.isAutoSelectDidEndUserInteractionEnabled = false
 
         viewControllers = createViewControllers()
+        
+        
     }
     
     override var frameForMenuBar: CGRect {
@@ -27,15 +31,16 @@ class ViewController: PageController {
 
         return CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: 64)
     }
+    
 
 }
 
-extension ViewController {
+extension MainViewController {
 
     func createViewControllers() -> [UIViewController] {
         
         return controllersTitle.map { name -> UIViewController in
-            let viewController = ContentViewController()
+            let viewController = NormalNewsListViewController()
             viewController.title = name
             return viewController
         }
