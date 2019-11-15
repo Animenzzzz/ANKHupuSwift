@@ -8,40 +8,42 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
-struct News: Identifiable {
-    var id: String
-    var title: String
-    var author: String
-    var date: String
-    var content: String
-    var thumbnail: String
+class News: Identifiable {
+    var id: String?
+    var title: String?
+    var replies: String?
+    var uptime: String?
+    var img: String?
+    var read: String?
+    var lights: String?
+
 }
 
 final class DataStore:ObservableObject{
     
-    @Published var newsList: [News] = []
+    @Published var newsDataList: [News] = []
     
     func fetchDalily(){
         
-        
-        let urlStr = "http://onapp.yahibo.top/public/?s=api/test/list"
+        let urlStr = "https://games.mobileapi.hupu.com/3/7.3.12/nba/getNews?news_first_navi=NBA&first_navi_numbers=2&preload=0&direc=next&num=20&client=c77bc7cfa00b1800f399938c4b3720aae4783b2a&clientId=30980511&advId=E12875A5-1076-4C57-9488-B5311B604032&_ssid=VFQtUXVXYW4xN0Y&night=0&crt=1557906702&time_zone=Asia%2FShanghai&sign=3366090f5a1d473a7b9ff3904c816af7"
         Alamofire.request(urlStr).responseJSON { (response) in
             switch response.result {
             case .success(let json):
-                print(json)
-                break
+                let dataDic = json as? NSDictionary
+                let dicData = (dataDic!.object(forKey: "result")) as? NSDictionary
+                
+                for index in 1...5{
+                    let news1 = News()
+                    news1.id = "fasd"
+                    news1.title = "fas"
+                    self.newsDataList.append(news1)
+                }
+             
             case .failure(let error):
-                print("error:\(error)")
+                print("\(error)")
                 break
-            }
-        }
-        
-        let daliy: NSArray = ["fas","fasfd"]
-        for (index, newsDict) in daliy.enumerated() {
-            if let newsDict = newsDict as? [String: Any] {
-                let news = News(id: String(index), title: newsDict["title"] as! String, author: newsDict["author"] as! String, date: newsDict["date"] as! String, content: newsDict["content"] as! String, thumbnail: newsDict["thumbnail"] as! String)
-                newsList.append(news)
             }
         }
     }

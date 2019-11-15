@@ -13,10 +13,10 @@ struct NewsList: View {
     @ObservedObject var store = DataStore()
     
     var body: some View {
-        List(0..<5) {_ in
-            Text(/*@START_MENU_TOKEN@*/"Placeholder"/*@END_MENU_TOKEN@*/)
+        List(store.newsDataList) {newsss in
+            Text("\(newsss.title!)")
         }
-    .onAppear(perform: { self.store.fetchDalily() })
+        .onAppear(perform: { self.store.fetchDalily()})
     }
 }
 

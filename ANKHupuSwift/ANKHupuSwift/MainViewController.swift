@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 let controllersTitle = ["推荐","NBA","绝对求生","英雄联盟"]
 
@@ -40,7 +41,9 @@ extension MainViewController {
     func createViewControllers() -> [UIViewController] {
         
         return controllersTitle.map { name -> UIViewController in
-            let viewController = NormalNewsListViewController()
+            
+            let swiftUIView = NewsList() // swiftUIView is View
+            let viewController = UIHostingController(rootView: swiftUIView)
             viewController.title = name
             return viewController
         }
