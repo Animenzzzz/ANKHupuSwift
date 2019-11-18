@@ -206,6 +206,8 @@
 			dependencies = (
 			);
 			name = ANKHupuSwift;
+			packageProductDependencies = (
+			);
 			productName = ANKHupuSwift;
 			productReference = 4AD1C3F3236FD54E00397AF4 /* ANKHupuSwift.app */;
 			productType = "com.apple.product-type.application";
@@ -234,6 +236,8 @@
 				Base,
 			);
 			mainGroup = 4AD1C3EA236FD54E00397AF4;
+			packageReferences = (
+			);
 			productRefGroup = 4AD1C3F4236FD54E00397AF4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

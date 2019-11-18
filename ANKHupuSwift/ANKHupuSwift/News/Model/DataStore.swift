@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-class News: Identifiable {
+class News: NSObject,Identifiable {
     var id: String?
     var title: String?
     var replies: String?
@@ -18,6 +18,17 @@ class News: Identifiable {
     var img: String?
     var read: String?
     var lights: String?
+    
+    init(id: String?,title: String?,replies: String?,uptime: String?,img: String?,read: String?,lights: String?) {
+        super.init()
+        self.id = id
+        self.title = title
+        self.replies = replies
+        self.uptime = uptime
+        self.img = img
+        self.read = read
+        self.lights = lights
+    }
 
 }
 
@@ -33,11 +44,10 @@ final class DataStore:ObservableObject{
             case .success(let json):
                 let dataDic = json as? NSDictionary
                 let dicData = (dataDic!.object(forKey: "result")) as? NSDictionary
+                let realData = dicData?.object(forKey: "data") as? [NSDictionary]
                 
-                for index in 1...5{
-                    let news1 = News()
-                    news1.id = "fasd"
-                    news1.title = "fas"
+                for item in realData!{
+                    let news1 = News(id: item.object(forKey: "nid") as? String, title: item.object(forKey: "title") as? String, replies: item.object(forKey: "replies") as? String, uptime: item.object(forKey: "uptime") as? String, img: item.object(forKey: "img") as? String, read: item.object(forKey: "read") as? String, lights: item.object(forKey: "lights") as? String)
                     self.newsDataList.append(news1)
                 }
              
