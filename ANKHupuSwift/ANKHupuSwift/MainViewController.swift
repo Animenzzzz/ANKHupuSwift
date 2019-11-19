@@ -9,7 +9,7 @@
 import UIKit
 import SwiftUI
 
-let controllersTitle = ["推荐","NBA","绝对求生","英雄联盟"]
+let controllersTitle = ["NBA","推荐","绝对求生","英雄联盟"]
 
 class MainViewController: PageController {
 
@@ -42,7 +42,7 @@ extension MainViewController {
         
         return controllersTitle.map { name -> UIViewController in
             
-            let swiftUIView = NewsList() // swiftUIView is View
+            let swiftUIView = NewsList(tag: name) // swiftUIView is View
             let viewController = UIHostingController(rootView: swiftUIView)
             viewController.title = name
             return viewController

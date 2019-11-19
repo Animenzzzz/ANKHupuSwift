@@ -7,11 +7,11 @@
 //
 
 import SwiftUI
-
+import Combine
 
 struct NewsNormalRow: View {
     
-    var data:News
+    let data:News
    
     var body: some View {
         
@@ -47,9 +47,7 @@ struct NewsNormalRow: View {
                 }
             }
             Spacer()
-        
-            Image(data.img!)
-                .resizable()
+            ImageViewContainer(imageURL: data.img!)
                 .frame(width: 100, height: 75)
         }
         .frame(height: 106)
@@ -63,5 +61,47 @@ struct NewsNormalCell_Previews: PreviewProvider {
     static var previews: some View {
         
         NewsNormalRow(data: News(id: "id", title: "这个是一个预览的测试的标题，要很长很长才能看得出效果", replies: "12345678", uptime: "uptime", img: "img", read: "read", lights: "374"))
+    }
+}
+
+@available(iOS 13.0, *)
+struct ImageViewContainer: View {
+    @ObservedObject var remoteImageURL: RemoteImageURL
+
+    init(imageURL: String) {
+        remoteImageURL = RemoteImageURL(imageURL: imageURL)
+    }
+
+    var body: some View {
+        Image(uiImage: (remoteImageURL.data.isEmpty) ? UIImage(imageLiteralResourceName: "IUIU") : UIImage(data: remoteImageURL.data)!)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+    }
+}
+
+@available(iOS 13.0, *)
+class RemoteImageURL: ObservableObject {
+    var didChange = PassthroughSubject<Data, Never>()
+    
+    @Published var data = Data() {
+        didSet {
+            update()
+        }
+    }
+    
+    func update() {
+        didChange.send(data)
+    }
+    
+    init(imageURL: String) {
+        guard let url = URL(string: imageURL) else { return }
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let data = data else { return }
+            
+            DispatchQueue.main.async {
+                self.data = data
+            }
+            
+        }.resume()
     }
 }
